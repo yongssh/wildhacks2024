@@ -7,7 +7,9 @@ import Timer from "../components/Timer original.js";
 import Bear1 from "/src/components/bear1.png";
 import Bear2 from "/src/components/bear2.png";
 
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("https://bearlyserver.onrender.com");
+//https://bearlyserver.onrender.com
+
 
 function Home() {
   const [room, setRoom] = useState("");
