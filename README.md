@@ -8,3 +8,6 @@ Because when you’re studying with friends,
 it **bear-ly** feels like you’re studying
 
 Created with React, Next.JS, Socket.io, etc.
+
+
+<img width="442" alt="Screenshot 2024-04-07 at 2 10 33 PM" src="https://github.com/yongssh/wildhacks2024/assets/115194864/3d0b24fe-28ad-403c-a20f-8cb4b0026b3e">
