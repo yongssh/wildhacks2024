@@ -1,3 +1,2 @@
-# wildhacks2024
+# we are "bearly" hanging on
 yong-yu, cate, joanna, katherine
-Hello guys!
