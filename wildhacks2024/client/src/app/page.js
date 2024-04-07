@@ -4,8 +4,8 @@ import styles from "./page.module.css";
 import io from 'socket.io-client'
 import { useEffect, useState } from 'react';
 import Timer from "../components/Timer original.js";
-import Bear1 from "/src/public/bear1.png";
-import Bear2 from "/src/public/bear2.png";
+import Bear1 from "/src/components/bear1.png";
+import Bear2 from "/src/components/bear2.png";
 
 const socket = io.connect("http://localhost:3001");
 
@@ -45,34 +45,34 @@ function Home() {
   return (
     <main>
       <div className="container">
-      <div className="bearly-title">
-        <h1>Bearly</h1>
-        <Image src={Bear2} alt="Bear2" width={80} height={60} />
-        
-      </div>
-      <div className="subtitle">
-          <h2>Hanging in there with friends</h2>
-          </div>
-   
-      <div className="join-room">
-        <input
-          placeholder="Room Number..."
-          onChange={(event) => setRoom(event.target.value)}
-        />
-        <button onClick={joinRoom}> Join Room </button>
-      </div>
+        <div className="bearly-title">
+          <h1>Bearly</h1>
+          <Image src={Bear2} alt="Bear2" width={80} height={60} />
 
-      <div  className="send-message">
-        <input 
-          placeholder="Send message" 
-          value={message} 
-          onChange={(event) => setMessage(event.target.value)} 
-        />
-        <button onClick={sendMessage}> Send Message </button>
-      </div>
-      <div className="Home">
-        <Timer />
-      </div>
+        </div>
+        <div className="subtitle">
+            <h2>Hanging in there with friends</h2>
+        </div>
+    
+        <div className="join-room">
+          <input
+            placeholder="Room Number..."
+            onChange={(event) => setRoom(event.target.value)}
+          />
+          <button onClick={joinRoom}> Join Room </button>
+        </div>
+
+        <div  className="send-message">
+          <input 
+            placeholder="Send message" 
+            value={message} 
+            onChange={(event) => setMessage(event.target.value)} 
+          />
+          <button onClick={sendMessage}> Send Message </button>
+        </div>
+        <div className="Timer">
+          <Timer />
+        </div>
       </div>
       <div className="MessageDisplay">
         <h3>Messages:</h3>
