@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import io from 'socket.io-client'
 import {useEffect, useState} from 'react';
-import Timer from "../components/Timer.js";
+import Timer from "../components/Timer original.js";
 
 const socket = io.connect("http://localhost:3001")
 
@@ -18,6 +18,11 @@ function Home() {
   
   const joinRoom = () => {
     if (room !== "") {
+      //! please please please please
+      {room && (
+        <Timer room={room} />
+      )}
+      //! added the above here 
       socket.emit("join_room", room);
     }
   }
@@ -49,7 +54,7 @@ function Home() {
             setRoom(event.target.value);
           }}
         />
-
+        
         <button onClick={joinRoom}> Join Room </button>
       </div>
 
