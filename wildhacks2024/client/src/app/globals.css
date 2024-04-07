@@ -6,13 +6,12 @@ body {
   background-color: #f3e3b9;
   color: #DD6E42;
   height: 100vh;
-  font:sans-serif;
- 
+  font-family: "Roboto Mono", monospace;
+  justify-content: center;
+  align-items: center;
 
 }
 
-
-/* Add flexbox properties to center elements */
 .container {
   display: flex;
   flex-direction: column;
@@ -22,19 +21,19 @@ body {
 
 .bearly-title {
   display: flex;
-  height: 100%;
   font:sans-serif;
   align-items: center;
   font-size: 30px;
-  margin-bottom: 20px; /* Add margin bottom for spacing */
 }
+
 
 
 /* Add spacing between buttons and inputs */
 input,
 button {
-  margin-left: 3px; /* Adjust the margin bottom as needed */
+  margin-left: 3px; 
   font:sans-serif;
+  
 }
 /* Keep the rest of your styles unchanged */
 
@@ -46,7 +45,7 @@ ul {
   list-style-type: none;
 }
 
-.Home {
+.Timer {
   display: flex;
   height: 100%;
   justify-content: center;
@@ -54,11 +53,16 @@ ul {
 
 }
 
+.subtitle {
+  font-size: 8px;
+  margin-top: 5px; 
+}
+
+
+
 
 .bear-logo{
   display: flex;
-  height: 30px;
-
 }
 
 .timer {
@@ -73,10 +77,10 @@ ul {
 }
 
 .MessageDisplay{
-  display: flex;
   height: 100%;
   justify-content: left;
   align-items: center;
+  margin-top: 20px;
 
 }
 
@@ -90,7 +94,6 @@ ul {
 
 .join-room{
   display: flex;
-  height: 100%;
   justify-content: left;
   align-items: center;
   margin-bottom: 15px;

@@ -48,9 +48,13 @@ function Home() {
       <div className="bearly-title">
         <h1>Bearly</h1>
         <Image src={Bear2} alt="Bear2" width={80} height={60} />
+        
       </div>
+      <div className="subtitle">
+          <h2>Hanging in there with friends</h2>
+          </div>
    
-      <div class="join-room">
+      <div className="join-room">
         <input
           placeholder="Room Number..."
           onChange={(event) => setRoom(event.target.value)}
@@ -58,7 +62,7 @@ function Home() {
         <button onClick={joinRoom}> Join Room </button>
       </div>
 
-      <div  class="send-message">
+      <div  className="send-message">
         <input 
           placeholder="Send message" 
           value={message} 
@@ -71,7 +75,7 @@ function Home() {
       </div>
       </div>
       <div className="MessageDisplay">
-        <h1>Messages:</h1>
+        <h3>Messages:</h3>
         {/* Display all the messages */}
         <ul>
           {messages.map((msg, index) => (

@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
 //https://www.geeksforgeeks.org/how-to-create-popup-box-in-reactjs/
 
-export default function Timer() {
+export default function Timer({room}) {
+
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [displayMessage, setDisplayMessage] = useState(false);
@@ -73,7 +74,7 @@ export default function Timer() {
 
     return (
         <div className="timer">
-            <input type="number" value={userInput} onChange={handleInputChange} />
+            <input type="number" placeholder="Please input a whole number" value={userInput} onChange={handleInputChange} />
             <button className="startBtn" onClick={startCountdown}>Set Time</button>
             {displayResume && <button className="resumeBtn" onClick={resumeCountdown}>Resume</button>}
             <button className="pauseBtn" onClick={stopCountdown}>Stop</button>
