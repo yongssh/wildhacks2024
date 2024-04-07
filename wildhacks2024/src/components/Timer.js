@@ -5,7 +5,7 @@ export default function Timer() {
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [displayMessage, setDisplayMessage] = useState(false);
-    const [userInput, setUserInput] = useState('');
+    const [userInput, setUserInput] = useState(''); 
     const [pauseTimer, setPauseTimer] = useState(false);
     const [displayResume, setDisplayResume] = useState(false);
 
@@ -16,23 +16,27 @@ export default function Timer() {
     const startCountdown = () => {
         let inputMinutes = parseInt(userInput, 10);
 
-        if (pauseTimer) {
-            setPauseTimer(false);
-            setDisplayResume(false);
-
-        }
-
-        if (inputMinutes <= 0 || inputMinutes > 120) {
+        if (isNaN(inputMinutes)) {
             setDisplayMessage(true);
-
+            
         } else {
-            setDisplayMessage(false);
+            if (pauseTimer) {
+                setPauseTimer(false);
+                setDisplayResume(false);
 
-            setMinutes(inputMinutes); 
-            setSeconds(0);
+            }
+
+            if (inputMinutes <= 0 || inputMinutes > 120) {
+                setDisplayMessage(true);
+
+            } else {
+                setDisplayMessage(false);
+
+                setMinutes(inputMinutes); 
+                setSeconds(0);
+            }
         }
         
-
     };
 
     const stopCountdown = () => {
