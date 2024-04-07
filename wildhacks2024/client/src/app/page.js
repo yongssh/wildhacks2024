@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import io from 'socket.io-client'
 import {useEffect, useState} from 'react';
+import Timer from "../components/Timer.js";
 
 const socket = io.connect("http://localhost:3001")
 
@@ -60,6 +61,10 @@ function Home() {
         <button onClick={sendMessage}> Send Message </button>
         <h1> Message:</h1>
         {messageReceived}
+      </div>
+
+      <div className="Home">
+        <Timer />
       </div>
       
     </main>
