@@ -1,22 +1,74 @@
-/* html, */
-body {
-  /* max-width: 100vw;
-  overflow-x: hidden; */
 
+body {
   background-color: #f3e3b9;
   color: #DD6E42;
   height: 100vh;
-  font-family: "Roboto Mono", monospace;
+  /* font-family: "Roboto Mono", monospace; */
+  /* justify-content: center;
+  align-items: center; */
+
+}
+
+/* .columns {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+} */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 
 }
 
-.container {
+.left, .center, .right {
+  flex: 1;
+  margin: 20px;
+}
+
+.left {
+  background-color: #DD6E42;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.center {
+  text-align: center;
+
+}
+
+.right {
+  background-color: #DD6E42;
+  color: #f3e3b9;
+  width: 200px;
+
+  border-radius: 10px;
+  padding: 10px;
+
+}
+
+.timer-container {
+  background-color: #DD6E42;
+  color: #f3e3b9;
+  
+
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+
+}
+
+.header {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 
 .bearly-title {
@@ -24,6 +76,20 @@ body {
   font:sans-serif;
   align-items: center;
   font-size: 30px;
+  margin-top: -1em;
+  margin-bottom: 2.5em;
+}
+
+.subtitle {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  background-color: #DD6E42;
+  border-radius: 10px;
+  color: #f3e3b9;
+
 }
 
 
@@ -31,8 +97,20 @@ body {
 /* Add spacing between buttons and inputs */
 input,
 button {
+  background-color: #f3e3b9;
+  border-color: #f3e3b9;
+  border-radius: 5px;
   margin-left: 3px; 
   font:sans-serif;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color:#DD6E42;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: none; /* Remove border from the input */
+  outline: none; /* Remove outline when input is focused */
   
 }
 /* Keep the rest of your styles unchanged */
@@ -57,8 +135,6 @@ ul {
   font-size: 8px;
   margin-top: 5px; 
 }
-
-
 
 
 .bear-logo{

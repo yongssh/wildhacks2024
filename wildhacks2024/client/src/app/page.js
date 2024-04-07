@@ -45,47 +45,65 @@ function Home() {
   return (
     <main>
       <div className="container">
-      <div className="bearly-title">
-        <h1>Bearly</h1>
-        <Image src={Bear2} alt="Bear2" width={80} height={60} />
-        
-      </div>
-      <div className="subtitle">
-          <h2>Hanging in there with friends</h2>
+
+          <div className="left">
+            <div className="join-room">
+              <input
+                placeholder="Room Number..."
+                onChange={(event) => setRoom(event.target.value)}
+              />
+              <button onClick={joinRoom}> Join Room </button>
+            </div>
+
+            <div  className="send-message">
+              <input 
+                placeholder="Send message" 
+                value={message} 
+                onChange={(event) => setMessage(event.target.value)} 
+              />
+              <button onClick={sendMessage}> Send Message </button>
+            </div>
+
           </div>
-   
-      <div className="join-room">
-        <input
-          placeholder="Room Number..."
-          onChange={(event) => setRoom(event.target.value)}
-        />
-        <button onClick={joinRoom}> Join Room </button>
-      </div>
 
-      <div  className="send-message">
-        <input 
-          placeholder="Send message" 
-          value={message} 
-          onChange={(event) => setMessage(event.target.value)} 
-        />
-        <button onClick={sendMessage}> Send Message </button>
-      </div>
-      <div className="Home">
-        <Timer />
-      </div>
-      </div>
-      <div className="MessageDisplay">
-        <h3>Messages:</h3>
-        {/* Display all the messages */}
-        <ul>
-          {messages.map((msg, index) => (
-            <li key={index} className={msg.sent ? 'sent' : 'received'}>
-              {msg.text}
-            </li>
-          ))}
-        </ul>
-      </div>
+          <div className="center">
+            <div className="header">
 
+              <div className="bearly-title">
+                <h1>Bearly</h1>
+                <Image src={Bear2} alt="Bear2" width={80} height={60} />
+                
+              </div>
+              <div className="subtitle">
+                  <h2 className="subText">Hanging in there with friends</h2>
+              </div>
+
+            </div>
+
+            <div className="timer-container">
+              <Timer />
+            </div>
+
+          </div>
+
+          <div className="right">
+
+            <div className="MessageDisplay">
+              <h3>Messages:</h3>
+              {/* Display all the messages */}
+              <ul>
+                {messages.map((msg, index) => (
+                  <li key={index} className={msg.sent ? 'sent' : 'received'}>
+                    {msg.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        
+
+      </div>
       
     </main>
   );
