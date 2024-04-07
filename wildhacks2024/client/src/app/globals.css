@@ -6,12 +6,44 @@ body {
   background-color: #f3e3b9;
   color: #DD6E42;
   height: 100vh;
-  font-family: "Roboto Mono", monospace;
-  
+  font:sans-serif;
+ 
+
 }
+
+
+/* Add flexbox properties to center elements */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bearly-title {
+  display: flex;
+  height: 100%;
+  font:sans-serif;
+  align-items: center;
+  font-size: 30px;
+  margin-bottom: 20px; /* Add margin bottom for spacing */
+}
+
+
+/* Add spacing between buttons and inputs */
+input,
+button {
+  margin-left: 3px; /* Adjust the margin bottom as needed */
+  font:sans-serif;
+}
+/* Keep the rest of your styles unchanged */
 
 #root {
   height: 100%;
+}
+
+ul {
+  list-style-type: none;
 }
 
 .Home {
@@ -19,6 +51,13 @@ body {
   height: 100%;
   justify-content: center;
   align-items: center;
+
+}
+
+
+.bear-logo{
+  display: flex;
+  height: 30px;
 
 }
 
@@ -30,9 +69,32 @@ body {
   font-size: 0.5em;
   min-height: 1.3em;
   margin-bottom: 1.5em;
+
 }
 
+.MessageDisplay{
+  display: flex;
+  height: 100%;
+  justify-content: left;
+  align-items: center;
 
+}
+
+.send-message{
+  display: flex;
+  height: 100%;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.join-room{
+  display: flex;
+  height: 100%;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 15px;
+}
 /* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

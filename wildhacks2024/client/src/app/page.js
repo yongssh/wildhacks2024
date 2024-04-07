@@ -1,79 +1,90 @@
 "use client";
-
 import Image from "next/image";
 import styles from "./page.module.css";
 import io from 'socket.io-client'
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Timer from "../components/Timer original.js";
+import Bear1 from "/src/public/bear1.png";
+import Bear2 from "/src/public/bear2.png";
 
-const socket = io.connect("http://localhost:3001")
+const socket = io.connect("http://localhost:3001");
 
 function Home() {
-  //* FEATURE: allow clients to join rooms with unique timers
   const [room, setRoom] = useState("");
-  
-  //* FEATURE: send messages between clients
   const [message, setMessage] = useState("");
-  const [messageReceived, setMessageReceived] = useState("");
-  
+  const [messages, setMessages] = useState([]); // State to store all messages
+
   const joinRoom = () => {
     if (room !== "") {
-      //! please please please please
-      {room && (
-        <Timer room={room} />
-      )}
-      //! added the above here 
       socket.emit("join_room", room);
     }
-  }
-
-  const sendMessage = () => {
-    //console.log('Message sent');
-    socket.emit('send_message', {message, room });
   };
 
-  //* PUTTING FEATURES IN ACTION
+  const sendMessage = () => {
+    // Emit the message to the server
+    socket.emit('send_message', { message, room });
+    // Add the sent message to the messages state
+    setMessages(prevMessages => [...prevMessages, { text: message, sent: true }]);
+    // Clear the message input
+    setMessage("");
+  };
+
   useEffect(() => {
-  socket.on("receive_message", (data) => {
-    setMessageReceived(data.message);
-  });
-  }, [socket])
+    // Listen for incoming messages
+    socket.on("receive_message", (data) => {
+      // Add the received message to the messages state
+      setMessages(prevMessages => [...prevMessages, { text: data.message, sent: false }]);
+    });
+    
+    // Clean up the event listener
+    return () => {
+      socket.off('receive_message');
+    };
+  }, []);
+
   return (
     <main>
-      
+      <div className="container">
       <div className="bearly-title">
-        <p>
-         Bearly -- A Group Pomodoro Timer 
-        </p>
+        <h1>Bearly</h1>
+        <Image src={Bear2} alt="Bear2" width={80} height={60} />
       </div>
-      
-      <div>
+   
+      <div class="join-room">
         <input
           placeholder="Room Number..."
-          onChange={(event) => {
-            setRoom(event.target.value);
-          }}
+          onChange={(event) => setRoom(event.target.value)}
         />
-        
         <button onClick={joinRoom}> Join Room </button>
       </div>
 
-      <div>
-        <input placeholder="send message" onChange={(event) =>{
-          setMessage(event.target.value);
-        }}
-          />
+      <div  class="send-message">
+        <input 
+          placeholder="Send message" 
+          value={message} 
+          onChange={(event) => setMessage(event.target.value)} 
+        />
         <button onClick={sendMessage}> Send Message </button>
-        <h1> Message:</h1>
-        {messageReceived}
       </div>
-
       <div className="Home">
         <Timer />
       </div>
+      </div>
+      <div className="MessageDisplay">
+        <h1>Messages:</h1>
+        {/* Display all the messages */}
+        <ul>
+          {messages.map((msg, index) => (
+            <li key={index} className={msg.sent ? 'sent' : 'received'}>
+              {msg.text}
+            </li>
+          ))}
+        </ul>
+      </div>
+
       
     </main>
   );
 }
-export default Home;
 
+export default Home;

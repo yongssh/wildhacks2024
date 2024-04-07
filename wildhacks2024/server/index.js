@@ -1,73 +1,49 @@
-//! USING THIS FILE IN ORDER TO TRY TO MAKE TIMERS SHARED ACROSS ROOMS
-const express = require("express");
-const app = express();
-const http = require("http");
-const {Server} = require("socket.io");
-
-const cors = require("cors") 
-
-app.use(cors());
-
-const server = http.createServer(app);
-
-const io = new Server(server, {
-    cors:{
-        origin: "http://localhost:3000",
-        methods:["GET", "POST"],
-    },
-});
+// Server-side logic for room-specific timers
+const roomTimers = {};
 
 io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`);
 
-    let timers = {}; // apl ace tos tore timer state by room
-
-    socket.on("join_room", (data) => {
-        socket.join(data);
-      });
-
-    socket.on("send_message", (data) => {
-        socket.to(data.room).emit("receive_message", data);
+    socket.on("join_room", (room) => {
+        socket.join(room);
+        // Initialize timer for the room if it doesn't exist
+        if (!roomTimers[room]) {
+            roomTimers[room] = {
+                duration: 0,
+                intervalId: null,
+            };
+        }
+        // Send current timer state to the joining user
+        socket.emit("timer_update", { remaining: roomTimers[room].duration });
     });
 
-    //! NEW CODE FROM CHAT
     socket.on("start_timer", ({ room, duration }) => {
-        // If a timer for the room doesn't exist or has ended, create a new one
-        if (!timers[room] || timers[room].remaining <= 0) {
-          timers[room] = { duration: duration * 60, remaining: duration * 60 }; // Assuming duration is in minutes
-        }
-      
-        // Emit the current state of the timer immediately
-        io.to(room).emit("timer_update", { remaining: timers[room].remaining });
-      
-        // Start or resume the countdown
-        if (!timers[room].interval) {
-          timers[room].interval = setInterval(() => {
-            if (timers[room].remaining > 0) {
-              timers[room].remaining--;
-              io.to(room).emit("timer_update", { remaining: timers[room].remaining });
-            } else {
-              clearInterval(timers[room].interval);
-              timers[room].interval = null;
-              io.to(room).emit("timer_done");
+        // Start or update timer for the room
+        roomTimers[room].duration = duration;
+        clearInterval(roomTimers[room].intervalId);
+        roomTimers[room].intervalId = setInterval(() => {
+            roomTimers[room].duration--;
+            if (roomTimers[room].duration <= 0) {
+                clearInterval(roomTimers[room].intervalId);
             }
-          }, 1000); // Update every second
-        }
-      });
+            // Broadcast timer updates to all users in the room
+            io.to(room).emit("timer_update", { remaining: roomTimers[room].duration });
+        }, 1000);
+    });
+
+    socket.on("pause_timer", (room) => {
+        // Stop the timer for the room
+        clearInterval(roomTimers[room].intervalId);
+    });
+
+    socket.on("disconnect", () => {
+        console.log(`User Disconnected: ${socket.id}`);
+    });
+    
+    
+    socket.on("clear_chat", () => {
+          io.emit("chat_cleared");
+        });
+
       
-      // Pause a timer
-      socket.on("pause_timer", ({ room }) => {
-        if (timers[room] && timers[room].interval) {
-          clearInterval(timers[room].interval);
-          timers[room].interval = null;
-          io.to(room).emit("timer_paused");
-        }
-      });
-    //! END OF NEW CODE FROM CHAT
-});
-
-//User Connected: 48BvFCeVv_uZN8YgAAAX
-
-server.listen(3001, () => {
-    console.log("SERVER IS RUNNING");
 });

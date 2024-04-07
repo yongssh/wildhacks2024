@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
-//https://www.geeksforgeeks.org/how-to-create-popup-box-in-reactjs/
+import React, { useState, useEffect } from "react";
+import io from 'socket.io-client';
 
-export default function Timer() {
+const Timer = ({ room }) => {
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [displayMessage, setDisplayMessage] = useState(false);
@@ -9,37 +9,40 @@ export default function Timer() {
     const [pauseTimer, setPauseTimer] = useState(false);
     const [displayResume, setDisplayResume] = useState(false);
 
-    const handleStartTimer = (duration) => {
-        // Emit an event to start the timer with the specified duration
-        socket.emit("start_timer", { room: yourRoomId, duration });
-      };
-      
+    const socket = io.connect("http://localhost:3001");
+
+    const handleStartTimer = () => {
+        if (userInput > 0 && userInput <= 120) {
+            socket.emit("start_timer", { room, duration: userInput * 60 }); // Convert minutes to seconds
+            setUserInput('');
+            setDisplayMessage(false);
+        } else {
+            setDisplayMessage(true);
+        }
+    };
+    
     const handlePauseTimer = () => {
-        // Emit an event to pause the timer
-        socket.emit("pause_timer", { room: yourRoomId });
+        socket.emit("pause_timer", { room });
     };
 
     useEffect(() => {
         socket.on("timer_update", (data) => {
-          // Assuming data contains the remaining time in seconds
-          const minutes = Math.floor(data.remaining / 60);
-          const seconds = data.remaining % 60;
-          setMinutes(minutes);
-          setSeconds(seconds);
+            const minutes = Math.floor(data.remaining / 60);
+            const seconds = data.remaining % 60;
+            setMinutes(minutes);
+            setSeconds(seconds);
         });
-      
-        // Cleanup this effect on component unmount
+
         return () => socket.off("timer_update");
-      }, []); // Empty dependency array means this runs once on mount
-      
+    }, [room]); // Include room in the dependency array to re-subscribe when room changes
 
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
     return (
         <div className="timer">
-            <input type="number" value={userInput} onChange={handleStartTimer} />
-            <button className="startBtn" onClick={startCountdown}>Set Time</button>
+            <input type="number" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
+            <button className="startBtn" onClick={handleStartTimer}>Set Time</button>
             {displayResume && <button className="resumeBtn" onClick={resumeCountdown}>Resume</button>}
             <button className="pauseBtn" onClick={handlePauseTimer}>Stop</button>
             <div className="message">
@@ -52,5 +55,6 @@ export default function Timer() {
 
         </div>
     );
-    
-}
+};
+
+export default Timer;
